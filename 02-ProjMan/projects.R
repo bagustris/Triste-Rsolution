@@ -24,10 +24,10 @@ install.packages("ProjectTemplate")
 library("ProjectTemplate")
 
 # Create the project. The "~" symbol is a short cut to your home directory.
-create.project("~/my_project2", merge.strategy = "allow.non.conflict")
+create.project("../my_project2", merge.strategy = "allow.non.conflict")
 
 # Change the working directory to the new project file.
-setwd("~/my_project2")
+setwd("../my_project2")
 
 # On your Files tab in Rstudio click on the gear and select
 # "Go to Working Directory". You should now see the directories

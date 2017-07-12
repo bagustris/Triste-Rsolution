@@ -4,7 +4,7 @@
 
 # Want to add a new column of ages
 age <- c(2,3,5,12)
-cats
+cats <- read.csv("../data/feline-data.csv")
 
 # Add a column using cbind
 cats <- cbind(cats, age)   # Oops!
@@ -115,6 +115,8 @@ cats
 
 # 1.1
 # Remove the duplicated lines we added to the data frame
+cats <- cats[c(-4:-6),]
+cats
 
 # 1.2
 # You can create a data frame using:
@@ -122,6 +124,7 @@ df <- data.frame(id = c('a', 'b', 'c'),
                  x = 1:3,
                  y = c(TRUE, TRUE, FALSE),
                  stringsAsFactors = FALSE)
+df
 # Create your own data frame that contains your:
 #
 #   first name
@@ -132,6 +135,14 @@ df <- data.frame(id = c('a', 'b', 'c'),
 #
 # Use cbind to add an extra column specifying whether they prefer
 # "tea", "coffee","juice" or "water"
+df2 <- data.frame(first_name = "Bagus",
+                 last_name = "Atmaja", 
+                 lucky_number = 7,
+                 stringsAsFactors = FALSE)
+df2
+
+df2 <- rbind(df2, list("Marylette", "Rao",4))
+df2
 
 # 1.3
 # Create a cats2 data frame that re-arranges the order of the 
@@ -139,6 +150,11 @@ df <- data.frame(id = c('a', 'b', 'c'),
 # data frame. Rename the columns of cats2 to use the capital
 # LETTERS starting from N and use every second letter, i.e. 
 # N (letter 14),P,R and T.
+cats2 <- cats
+cats2
+cats2[c("weight", "coat", "likes_string", "age")]
+rownames(cats2) <- c("N", "P", "R")
+cats2
 
 # Realistic example -------------------------------------------------------
 
@@ -202,7 +218,7 @@ ncol(gapminder)
 dim(gapminder)
 
 # Can get the names of the columns
-colname(gapminder)
+colnames(gapminder)
 
 # or (same for data frames but not matrices and other data types)
 names(gapminder)

@@ -139,7 +139,7 @@ typeof(character_coerced_to_numeric)
 # Challenge 1 -------------------------------------------------------------
 
 # 1.1 coerce character_coerced_to_numeric to integers.
-
+as.integer(character_coerced_to_numeric)
 
 
 # Type coercion -----------------------------------------------------------
@@ -214,6 +214,10 @@ names(my_example)
 # 3. Name them (there is a built in vector called letters for small 
 #    case letters LETTERS for capitals).
 
+x <- 1:26
+y <- x*2
+z <- letters(1:26)
+
 # 2.2 What do you think the following will give you?
 x<- seq(1,4)
 x+1
@@ -283,10 +287,13 @@ default_factor
 # characters.
 myvals <- c(1,2,3,3,2,1,10,2,5)
 factor_of_myvals <- factor(myvals)
+as.integer(as.character(factor_of_myvals))
 
 # 3.2 factors are good for doing quick plots:
 animals <- factor(c("dog","cat","dog","cow","dog","dog","dog","rabbit"))
 plot(animals)
+levels(animals) <- c("rabbit", "dog", "cow", "cat")
+plot(animals, main="Farm Yard Animals", xlab="Animals", col="red")
 # Look up the documentation for plot and to this diagram do the following:
 #
 # 1. Add a plot title "Farm yard animals"
