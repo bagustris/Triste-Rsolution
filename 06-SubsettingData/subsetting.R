@@ -145,6 +145,11 @@ names(y)[1:3]
 names(y)[6] <- "f"
 y
 
+y <- c(y,7.0)
+y
+names(y)[7] <- "g"
+y
+
 # Now try:
 names(y) == c("a","b","c")
 
@@ -223,6 +228,7 @@ all(c(TRUE,TRUE,TRUE,TRUE,TRUE))
 all(c(TRUE,TRUE,FALSE,TRUE,TRUE))
 all(x>0)
 all(x<8)
+x
 
 # Similarly you can see if any condition is TRUE
 any(c(FALSE,FALSE,FALSE,FALSE,FALSE))
@@ -422,19 +428,21 @@ gapminder[3,]  # Rows are data frames, columns are vectors
 # 6.1 Fix each of the following common data frame subsetting errors:
 
 # Extract observations collected for the year 1957
-gapminder[gapminder$year = 1957,]
+gapminder[gapminder$year == 1957,]
 
 # Extract all columns except 1 through to 4
-gapminder[,-1:4]
+gapminder[,-4]
+gapminder[,-1:-4]   # need to be check
 
 # Extract the rows where the life expectancy is longer the 80 years
-gapminder[gapminder$lifeExp > 80]
+gapminder[gapminder$lifeExp > 80,]
+head(gapminder[gapminder$lifeExp > 80,])
 
 # Extract the first row, and the fourth and fifth columns (lifeExp and gdpPercap).
-gapminder[1, 4, 5]
+gapminder[1, c(4, 5)]
 
 # Advanced: extract rows that contain information for the years 2002 and 2007
-gapminder[gapminder$year == 2002 | 2007,]
+gapminder[gapminder$year == 2002 | gapminder$year == 2007,]
 
 # 6.2 Why does gapminder[1:20] return an error? 
 #    How does it differ from gapminder[1:20, ]?
