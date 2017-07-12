@@ -54,8 +54,7 @@ year_country_gdp_euro <- gapminder %>%
 
 # Note that the %>%  must go at the end of the line if you are breaking up
 # into multiple lines. The following will give you an error:
-year_country_gdp_euro <- gapminder 
-%>% filter(continent=="Europe") 
+year_country_gdp_euro <- gapminder %>% filter(continent=="Europe") 
 
 
 # Challenge 1 -------------------------------------------------------------
@@ -65,7 +64,8 @@ year_country_gdp_euro <- gapminder
 #     country and year, but not for other Continents. How many rows does your 
 #     dataframe have and why?
 
-
+gapminder %>% filter(continent == "Africa") %>% select(lifeExp, country, year) -> africaRules
+nrow(africaRules)
 
 # Using group_by() and summarize() ----------------------------------------
 
@@ -102,9 +102,24 @@ gapminder %>%
 # 2.1 Calculate the average life expectancy per country. Which has the longest 
 #     average life expectancy and which has the shortest average life expectancy?
 
+lifeExp_bycountry <- gapminder %>% group_by(country) %>%
+  summarize(mean_lifeExp=mean(lifeExp))
+lifeExp_bycountry
+lifeExp_bycountry %>% 
+  filter(mean_lifeExp == min(mean_lifeExp) | mean_lifeExp == max(mean_lifeExp))
+
 # 2.2 Do the same thing but using the arrange() (arrange rows by variable)
 #     and desc() (descending order) functions.
 
+# using head >> accend (default)
+lifeExp_bycountry %>%
+  arrange(mean_lifeExp) %>%
+  head(3)
+
+# descend
+lifeExp_bycountry %>%
+  arrange(desc(mean_lifeExp)) %>%
+  head(5)
 
 # count() and n() ---------------------------------------------------------
 
@@ -207,4 +222,12 @@ gapminder %>%
 #      Hint: Use the dplyr functions arrange() and sample_n(), they have 
 #      similar syntax to other dplyr functions.
 
+# Solution, but how to show randomly selected countries?
+lifeExp_twoRandomCountries_bycontinents <- gapminder %>%
+  filter(year==2002) %>%
+  group_by(continent) %>%
+  sample_n(2) %>%
+  summarize(mean_lifeExp=mean(lifeExp)) %>%
+  arrange(desc(mean_lifeExp))
 
+lifeExp_twoRandomCountries_bycontinents

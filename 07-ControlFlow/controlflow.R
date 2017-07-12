@@ -2,22 +2,27 @@
 # Control flow ------------------------------------------------------------
 
 condition <- TRUE
+condition <- FALSE
 
 # if
 if (condition) {
   # perform action
+  print("hello1")
 }
 
 # if ... else
 if (condition) {
   # perform action
+  print("hello1")
 } else {  # that is, if the condition is false,
   # perform alternative action
+  print("hello2")
 }
 
 # sample a random number from a Poisson distribution
 # with a mean (lambda) of 8
 x <- rpois(1, lambda=8)
+x
 
 if (x >= 10) {
   print("x is greater than or equal to 10")
@@ -28,6 +33,9 @@ x
 # Set a seed so we get the same sequence of random numbers
 set.seed(10)
 x <- rpois(1, lambda=8)
+x
+
+# x = 3
 
 if (x >= 10) {
   print("x is greater than or equal to 10")
@@ -103,6 +111,7 @@ while(condition){
 
 # runif() generates random numbers from a uniform distribution between 0 and 1
 z <- 1
+z
 while(z > 0.1){
   z <- runif(1)
   print(z)

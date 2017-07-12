@@ -21,7 +21,7 @@ ggsave("My_most_recent_plot.pdf")
 # would be useful for a loop.
 
 # Produce output as a pdf file
-pdf("Life_Exp_vs_time.pdf", width=12, height=4)
+pdf("Life_Exp_vs_time%03d.pdf", width=12, height=4)
 
 # Plot the graph. Use az.countries otherwise your graph will be too busy.
 ggplot(data=az.countries, aes(x=year, y=lifeExp,colour=country)) +
@@ -37,15 +37,49 @@ dev.off()
 #     facet plot (hint: use facet_grid) of the same data with one panel per 
 #     continent.
 
+# produce pdf
+pdf("Life_Exp_vs_time%03d.pdf", width=12, height=4)
+
+# Plot the graph. Use az.countries otherwise your graph will be too busy.
+ggplot(data=az.countries, aes(x=year, y=lifeExp,colour=country)) +
+  geom_line()
+
+ggplot(data=az.countries, aes(x=year, y=lifeExp,colour=country)) +
+  geom_line() +
+  facet_wrap(~ country)
+
+# You then have to make sure to turn off the pdf device!
+dev.off()
+
 # 1.2 Produce output to jpeg, use jpeg().
+jpeg("third_page.jpg", width=12, height=4)
 
 # 1.3 Produce output to png, use png()
+png("Life_Exp_vs_time%03d.png", width=12, height=4)
+ggplot(data=az.countries, aes(x=year, y=lifeExp,colour=country)) +
+  geom_line()
 
-# 1.4 Add the flag to your pdf() command "oneline=FALSE" *only* if you are using the pdf() 
+ggplot(data=az.countries, aes(x=year, y=lifeExp,colour=country)) +
+  geom_line() +
+  facet_wrap(~ country)
+
+dev.off()
+
+# 1.4 Add the flag to your pdf() command "onefile=FALSE" *only* if you are using the pdf() 
 #     output command and change the output filename to "Life_Exp_vs_time%03d.ext" 
 #     where ext is either pdf, png or jpeg depending on the output that you are using. 
 #     What do you obsrve now?
 
+pdf("Life_Exp_vs_time%03d.pdf", width=12, height=4, onefile=FALSE)
+
+ggplot(data=az.countries, aes(x=year, y=lifeExp, color=continent)) +
+  geom_line()
+
+ggplot(data=az.countries, aes(x=year, y=lifeExp, color=continent)) +
+  geom_line() +
+  facet_wrap( ~ country)
+
+dev.off()
 
 # Writing data ------------------------------------------------------------
 
@@ -80,5 +114,13 @@ write.table(aust_subset,
 #
 # Use this script to write out the new subset to a file in the 
 # ../cleaned-data/ directory.
+aust_subset <- gapminder[gapminder$country == "Australia",]
 
+
+write.table(aust_subset,
+            file="../cleaned-data/gapminder-aus2.csv",
+            sep=",",
+            quote=FALSE,
+            row.names=FALSE
+)
 

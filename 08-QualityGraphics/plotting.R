@@ -13,8 +13,10 @@
 # Think that we are building a graph in layers.
 #
 
-# Load the ggplot2 package
+# Load the ggplot2 package and the data
 library(ggplot2)
+gapminder <- read.csv("../data/gapminder-FiveYearData.csv")
+
 
 # Plotting the lifeExp against  the gdpPercap 
 # Note: the "+" must always be at the end of the line.
@@ -38,7 +40,7 @@ g + geom_point()
 # 1.1 Modify the example so that the figure shows how life expectancy has 
 #     changed over time:
 
-ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()
 
 # Hint: the gapminder dataset has a column called “year”, which should 
 #       appear on the x-axis.
@@ -51,6 +53,9 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
 #     Are they what you expected?
 
 # NB ggplot2 will accept either British or American spelling, e.g. colour vs color.
+ggplot(data = gapminder, aes(x = year, y = lifeExp, colour=continent)) + geom_point()
+ggplot(data = gapminder, aes(x = year, y = lifeExp, colour=country)) + geom_point()
+
 
 # Layers ------------------------------------------------------------------
 
@@ -87,10 +92,21 @@ ggplot(data = gapminder, aes(x=year, y=lifeExp, by=country)) +
 
 # 2.1 Switch the order of the point and line layers from the previous example. 
 #     What happened? i.e. points before lines
+ggplot(data = gapminder, aes(x=year, y=lifeExp, by=country)) +
+  geom_point(colour="blue") + geom_line(aes(colour=continent)) 
+
 
 # 2.2 Look at the ggplot documentation to see how to:
 #     1. Add a plot title (ggtitle)
 #     2. Add an x and y axis lable (xlab,ylab)
+
+p <- ggplot(data = gapminder, aes(x=year, y=lifeExp, by=country)) +
+  geom_point(colour="blue") + geom_line(aes(colour=continent)) 
+p + labs(x = "year", y = "Life expenctancy", title = "Life expectancy over continent")
+
+ggplot(data = gapminder, aes(x=year, y=lifeExp, by=country)) +
+  geom_point(colour="blue") + geom_line(aes(colour=continent)) +  
+  labs(x = "year", y = "Life expenctancy", title = "Life expectancy over continent")
 
 # Transformations and statistics ------------------------------------------
 # 
@@ -111,7 +127,7 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color=continent)) +
 # - Make the points semi transparent using alpha
 #
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
-      geom_point(alpha = 0.5) + 
+      geom_point(alpha = .5) + 
       scale_x_log10()
 
 # x-axis are now increasing in powers of 10.
@@ -121,6 +137,11 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
       geom_point(aes(alpha = continent)) + 
       scale_x_log10()
+
+# with color continent
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color=continent)) +
+  geom_point(aes(alpha = continent)) + 
+  scale_x_log10()
 
 # Fit a simple relationship (linear model - "lm") to the data by adding 
 # another layer, geom_smooth:
@@ -145,9 +166,9 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
 #   previous example. Change the colour of the line.
 #   Hint: do not use the aes function.
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
-      geom_point() + 
+      geom_point(size=1, colour="blue", aes(shape=continent)) + 
       scale_x_log10() + 
-     geom_smooth(method="lm", size=1.5)
+      geom_smooth(method="lm", size=2, color="red")
 
 # 3.1 Modify your solution to the previous exercise so that the points are now 
 #     a different shape and are colored by continent with new trendlines. 
@@ -160,6 +181,7 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
 
 # Going to use the substr() function that allows you to snip bits of a string:
 z <- "0123456789"
+z
 substr(z,start=1,stop=1)
 substr(z,start=1,stop=2)
 substr(z,start=nchar(z)-1,stop=nchar(z))
@@ -235,8 +257,15 @@ ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) +
 #     observe if you add an alpha value inside or outside the aes
 #     parameters?
 
+ggplot(data = az.countries, aes(x = gdpPercap, fill=continent)) +
+  geom_density()
+
+ggplot(data = az.countries, aes(x = gdpPercap, fill=continent)) +
+  geom_point(alpha=0.5)+ scale_x_log10()
   
 # 4.2 Advanced: Transform the x axis to better visualise the data spread.
 
+ggplot(data = gapminder, aes(x = year, y = gdpPercap)) +
+  geom_point(aes(alpha = continent))
 
 # 4.3 Advanced: Add a facet layer to panel the density plots by year.

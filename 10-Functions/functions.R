@@ -65,7 +65,13 @@ fahr_to_kelvin(212)
 #     temperature in Kelvin and returns that temperature in Celsius.
 #
 # Hint: To convert from Kelvin to Celsius you subtract 273.15
+kelvin_to_celcius <- function(temp) {
+  celcius <- temp - 273.15
+  return(celcius)
+  
+}
 
+kelvin_to_celcius(50)
 
 # 1.2 Combining functions
 #     Let's define 2 new functions:
@@ -82,6 +88,14 @@ kelvin_to_celsius <- function(temp) {
 
 # Use these two functions to create a new fahr_to_celsius function.
 
+fahr_to_celcius <- function(temp) {
+  kelvin <- fahr_to_kelvin(temp)
+  celsius <- kelvin_to_celsius (kelvin)
+  return(celsius)
+}
+
+fahr_to_kelvin(32)
+fahr_to_celcius(32)
 
 # Something ---------------------------------------------------------------
 
@@ -151,6 +165,8 @@ calcGDP(gapminder, year=2007, country="Australia")
 # 2.1 Test the GDP function by calculating the GDP for New Zealand 
 #     in 1987. How does this differ from New Zealand’s GDP in 1952?
 
+calcGDP(gapminder, year=c(1952,2007), country="New Zealand")
+
 # 2.2 The paste function can be used to combine text together, e.g:
 
 best_practice <- c("Write", "programs", "for", "people", "not", "computers")
@@ -163,7 +179,16 @@ paste(best_practice, collapse=" ")
 #
 # Note: the paste function has an argument called sep, which specifies the 
 # separator between text. The default is a space: “ “. The default for 
-# paste0 is no space “”.
+# paste is no space “”.
+
+fence <- function(text, wrapper=" ") {
+  mytext <- paste(text, collapse=" ", sep=" ")
+  return(paste(wrapper, mytext, wrapper))
+}
+
+fence(text=best_practice, wrapper="***")
+fence(text=best_practice, wrapper="---")
+
 
 # Writing R functions:
 # When you first start out, your workflow will probably look a lot like this:
